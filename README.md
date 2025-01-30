@@ -5,11 +5,11 @@ A Bash wrapper for the Trinity RNA-Seq transcriptome assembler that dynamically 
 Paratrin is a Bash script and requires no installation. You can obtain Paratrin by cloning this repository with the following command:
 
 ```
-git clone https://github.com/adamrork/Paratrin.git
+git clone https://github.com/adamrork/paratrin.git
 ```
 
 # Dependencies
-Paratrin was developed for Linux operating systems and should work on most distributions. It has been tested on CentOS 7 and Ubuntu 19.04, specifically. Besides Bash and the standard GNU/Linux utilities, it has the following dependencies:<br/>
+Paratrin was developed for Linux operating systems and should work on most distributions. It has been tested on CentOS 7 and Ubuntu 19.04, specifically. Besides Bash and the standard GNU/Linux utilities, it has the following dependencies:
 
 **Required:**
 ```
@@ -46,15 +46,14 @@ Paratrin can significantly reduce the time spent creating and running Trinity RN
 
 Paratrin v0.5.0 is the first public beta release and is under active development. Please feel free to fork this repository, contribute your thoughts and suggestions, and report bugs in the Issues tab. Paratrin is neither affiliated with, endorsed by, nor supported by the official Trinity RNA-Seq project, the official GNU Parallel project, or their authors.
 
-# Basic Command Formatting
+# Command Formatting
 Your commands may only contain alphanumerics, spaces, and the following characters: `_ - / \ " ' : , .`
 
 Dollar signs (`$`) are allowed insofar as they are used to specify environmental variables (e.g., `"$FOO"`)
 
 Path names should ideally contain only alphanumerics, hyphens, underscores, periods, and forward slashes. Although data filenames are not explicitly provided as arguments to Paratrin, they must also conform to these standards and will ideally consist of alphanumerics, hyphens, underscores, and periods only.
 
-# Input Data Organization
-
+# Data Organization
 ### Single-end, samples files, and bam data
 For standard assemblies, all files to be analyzed in a single Paratrin run must be within a single input directory. All single-end files, samples files, and bam files in a directory must have unique basenames and identical filename suffixes. Consider the following three directories containing single-end data, samples files, and bam data:
 
@@ -151,40 +150,39 @@ Required Options
 Please consult [the official Trinity RNA-Seq documentation](https://github.com/trinityrnaseq/trinityrnaseq/wiki) or run `Trinity --show_full_usage_info` from your terminal for more information on setting various Trinity options.
 
 # Usage Examples
-
 Please note, the options and arguments passed to Paratrin will populate all generated commands with the same arguments aside from the input files and results directories. If you wish to assemble various datasets, each with different arguments, you will need to start multiple runs, one per argument set. For example, if you aim to assemble a stranded dataset and an unstranded dataset, you will need two commands: one with `--SS_lib_type <ARG>` set and one without.
 
 ## Basic Usage
-The following examples reference the directories and files in the **Input Data Organization** section.
+The following examples reference the directories and files in the **Data Organization** section.
 
 ### Single-end assembly mode
-The following command would start three parallel assemblies for the species_A, species_B, and species_C data in `single_end_dir/`:
+The following command would start three parallel assemblies for the species_A, species_B, and species_C data in `single_dir/`:
 ```
-bash Paratrin.sh \
-        --input_dir /path/to/single_end_dir/ --output_dir /path/to/single_outdir/ \
+bash paratrin.sh \
+        --input_dir /path/to/single_dir/ --output_dir /path/to/single_outdir/ \
         --single_suffix .fq --jobs 3 --seqType fq --max_memory 4G
 ```
 
 ### Paired-end assembly mode
-The following command would start three parallel assemblies for the species_J, species_K, and species_L data in `paired_end_dir/`:
+The following command would start three parallel assemblies for the species_J, species_K, and species_L data in `paired_dir/`:
 ```
-bash Paratrin.sh \
-        --input_dir /path/to/paired_end_dir/ --output_dir /path/to/paired_outdir/ \
+bash paratrin.sh \
+        --input_dir /path/to/paired_dir/ --output_dir /path/to/paired_outdir/ \
         --left_suffix _R1.fq --right_suffix _R2.fq --jobs 3 --seqType fq --max_memory 4G
 ```
 
 ### Samples file assembly mode
 The following command would start three parallel assemblies for the sample_D, sample_E, and sample_F data in `samples_dir/`:
 ```
-bash Paratrin.sh \
-        --input_dir /path/to/samples_dir/ --output_dir /path/to/sample_outdir/ \
+bash paratrin.sh \
+        --input_dir /path/to/samples_dir/ --output_dir /path/to/samples_outdir/ \
         --samples_suffix .txt --jobs 3 --seqType fq --max_memory 4G
 ```
 
 ### Genome-guided assembly mode
 The following command would start three parallel assemblies for the species_G, species_H, and species_I data in `bam_dir/`:
 ```
-bash Paratrin.sh \
+bash paratrin.sh \
         --input_dir /path/to/bam_dir/ --output_dir /path/to/bam_outdir/ \
         --bam_suffix .bam  --genome_guided_max_intron 10000 --jobs 3 --seqType fq --max_memory 4G
 ```
@@ -194,46 +192,46 @@ bash Paratrin.sh \
 ### Hybrid assembly
 To incorporate long reads data into single-end, paired-end, or samples files analyses, you may add the options:
 ```
-bash Paratrin.sh [core opts] --long_data_dir /path/to/long_reads_dir/ --long_reads_suffix .LR.fa
+bash paratrin.sh [core opts] --long_data_dir /path/to/long_reads_dir/ --long_reads_suffix .LR.fa
 ```
 
 To incorporate long bam data into genome-guided analyses, you may add the options:
 ```
-bash Paratrin.sh [core opts] --long_data_dir /path/to/long_bam_dir/ --long_bam_suffix .LR.bam
+bash paratrin.sh [core opts] --long_data_dir /path/to/long_bam_dir/ --long_bam_suffix .LR.bam
 ```
 
 ### Performing dry runs
 Before starting full Trinity runs, it is strongly recommended that a dry run of Paratrin first be performed by setting the `--dry_run` option. Dry runs should only take a few seconds and generate all Trinity commands and results directories without running Trinity itself. You may review these outputs, and if satisfactory, you may delete them, unset `--dry_run`, and restart your analysis.
 ```
-bash Paratrin.sh [core opts] --dry_run
+bash paratrin.sh [core opts] --dry_run
 ```
 
 ### Running Trinity via Singularity
 Paratrin looks for Trinity in your PATH by default. If you would prefer to run Trinity via Singularity, you may do so by providing the path to your Trinity Singularity Image File to the `--singularity_image` option:
 ```
-bash Paratrin.sh [core opts] --singularity_image /path/to/trinityrnaseq.v2.15.2.simg
+bash paratrin.sh [core opts] --singularity_image /path/to/trinityrnaseq.v2.15.2.simg
 ```
 
 ### Using extra Trinity options
 If you wish to run Trinity using options not listed in the **Options** section, you may use the `--extra_options` option. Importantly, the argument passed to `--extra_options` must be within double quotes. Consider the following example, which sets both `--min_kmer_cov 2` and `--min_glue 3`:
 ```
-bash Paratrin.sh [core opts] --extra_options "--min_kmer_cov 2 --min_glue 3"
+bash paratrin.sh [core opts] --extra_options "--min_kmer_cov 2 --min_glue 3"
 ```
-The requirement to enclose arguments within double quotes also applies to the four options: `--quality_trimming_params`, `--bfly_opts`, `--grid_exec`, and `--singularity_extra_params`
+The requirement to enclose arguments within double quotes also applies to the following options: `--quality_trimming_params`, `--bfly_opts`, `--grid_exec`, and `--singularity_extra_params`
 
 
 ### Help messages and version information
 To print a help message or version and license information, you may use the commands below, respectively:
 ```
-bash Paratrin.sh --help
-bash Paratrin.sh --version
+bash paratrin.sh --help
+bash paratrin.sh --version
 ```
 
 # Results
 Your results will be at the path passed to `--output_dir`. Within this directory, you should find one or more Trinity results directories named `basename_trinity_assembly/`, where *basename* is the basename of the data file(s) assembled. You will also find a `Paratrin_output/` directory that contains a file named `mode_trinity_commands.txt`, where *mode* is either paired, single, samples, or bam. This file will contain each Trinity command generated, one per line. For example, as written, the example under **Single-end assembly mode** would produce the following directories in `/path/to/single_outdir/`:
 ```
 single_outdir/
-  Paratrin_output/
+  paratrin_output/
   species_A_trinity_assembly/
   species_B_trinity_assembly/
   species_C_trinity_assembly/
@@ -257,11 +255,11 @@ Trinity --single /path/to/single_end_dir/species_C.fq \
 For more information on the contents of Trinity results directories, please consult [the official Trinity RNA-Seq documentation](https://github.com/trinityrnaseq/trinityrnaseq/wiki).
 
 # Considerations
-- Trinity can be resource-intensive, and running several jobs in parallel may use significant computational resources. It is recommended that users carefully consider the resources available on their systems before running Trinity through Paratrin. Running Paratrin on a high-performance computing cluster or a desktop built for such tasks is recommended for massively parallelized projects.
+- Trinity can be resource-intensive, and running several jobs in parallel may require significant computational resources. It is recommended that users carefully consider the resources available on their systems before running Trinity via Paratrin. Running Paratrin on a high-performance computing cluster or a desktop built for such tasks is recommended for massively parallelized projects.
 
 - Paratrin does not currently support running Trinity via Docker. For now, please consider using the official Singularity Trinity Image if you need to use a container.
 
-- Standard Trinity users may specify comma-delimited lists of files as inputs, which will be co-assembled. This convention is useful for assembling data split across multiple sequencing lanes. For example, consider the following directory of gzipped FASTQ data:
+- In standard use, users may specify comma-delimited lists of files as inputs to Trinity to be co-assembled. This convention is useful for assembling data split across multiple sequencing lanes. For example, consider the following directory of gzipped FASTQ data:
 ```
 data_dir/
   species_A_L001.fq.gz
