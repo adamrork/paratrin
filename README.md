@@ -219,7 +219,7 @@ If you wish to run Trinity using options not listed in the **Options** section, 
 ./paratrin.sh [required opts] --extra_options "--min_kmer_cov 2 --min_glue 3"
 ```
 
-The requirement to enclose arguments within double quotes also applies to the options `--quality_trimming_params`, `--bfly_opts`, `--grid_exec`, and `--singularity_extra_params`. <br/><br/>
+The requirement to enclose arguments within double quotes also applies to the options `--quality_trimming_params`, `--bfly_opts`, `--grid_exec`, and `--singularity_extra_params`.
 
 ### Printing a help message and version information
 To print a help message or version and license information, you may use the commands below, respectively:
