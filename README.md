@@ -159,7 +159,7 @@ The following examples reference the directories and files in the **Data Organiz
 ### Single-end assembly mode
 The following command would start three parallel assemblies for the species_A, species_B, and species_C data in `single_dir/`:
 ```
-bash paratrin.sh \
+./paratrin.sh \
         --input_dir /path/to/single_dir/ --output_dir /path/to/single_outdir/ \
         --single_suffix .fq --jobs 3 --seqType fq --max_memory 4G
 ```
@@ -167,7 +167,7 @@ bash paratrin.sh \
 ### Paired-end assembly mode
 The following command would start three parallel assemblies for the species_J, species_K, and species_L data in `paired_dir/`:
 ```
-bash paratrin.sh \
+./paratrin.sh \
         --input_dir /path/to/paired_dir/ --output_dir /path/to/paired_outdir/ \
         --left_suffix _R1.fq --right_suffix _R2.fq --jobs 3 --seqType fq --max_memory 4G
 ```
@@ -175,7 +175,7 @@ bash paratrin.sh \
 ### Samples file assembly mode
 The following command would start three parallel assemblies for the sample_D, sample_E, and sample_F data in `samples_dir/`:
 ```
-bash paratrin.sh \
+./paratrin.sh \
         --input_dir /path/to/samples_dir/ --output_dir /path/to/samples_outdir/ \
         --samples_suffix .txt --jobs 3 --seqType fq --max_memory 4G
 ```
@@ -183,7 +183,7 @@ bash paratrin.sh \
 ### Genome-guided assembly mode
 The following command would start three parallel assemblies for the species_G, species_H, and species_I data in `bam_dir/`:
 ```
-bash paratrin.sh \
+./paratrin.sh \
         --input_dir /path/to/bam_dir/ --output_dir /path/to/bam_outdir/ \
         --bam_suffix .bam  --genome_guided_max_intron 10000 --jobs 3 --seqType fq --max_memory 4G
 ```
@@ -193,39 +193,39 @@ bash paratrin.sh \
 ### Hybrid assembly
 To incorporate long reads data into single-end, paired-end, or samples files analyses, you may add the options:
 ```
-bash paratrin.sh [required opts] --long_data_dir /path/to/long_reads_dir/ --long_reads_suffix .LR.fa
+./paratrin.sh [required opts] --long_data_dir /path/to/long_reads_dir/ --long_reads_suffix .LR.fa
 ```
 
 To incorporate long bam data into genome-guided analyses, you may add the options:
 ```
-bash paratrin.sh [required opts] --long_data_dir /path/to/long_bam_dir/ --long_bam_suffix .LR.bam
+./paratrin.sh [required opts] --long_data_dir /path/to/long_bam_dir/ --long_bam_suffix .LR.bam
 ```
 
 ### Performing dry runs
 Before starting full Trinity runs, it is strongly recommended that a dry run of Paratrin first be performed by setting the `--dry_run` option. Dry runs should only take a few seconds and generate all Trinity commands and results directories without running Trinity itself. You may review these outputs, and if satisfactory, you may delete them, unset `--dry_run`, and restart your analysis.
 ```
-bash paratrin.sh [required opts] --dry_run
+./paratrin.sh [required opts] --dry_run
 ```
 
 ### Running Trinity via Singularity
 Paratrin looks for Trinity in your PATH by default. If you would prefer to run Trinity via Singularity, you may do so by providing the path to your Trinity Singularity Image File to the `--singularity_image` option:
 ```
-bash paratrin.sh [required opts] --singularity_image /path/to/trinityrnaseq.v2.15.2.simg
+./paratrin.sh [required opts] --singularity_image /path/to/trinityrnaseq.v2.15.2.simg
 ```
 
 ### Using extra Trinity options
 If you wish to run Trinity using options not listed in the **Options** section, you may use the `--extra_options` option. Importantly, the argument passed to `--extra_options` must be within double quotes. Consider the following example, which sets both `--min_kmer_cov 2` and `--min_glue 3` in each generated Trinity command:
 ```
-bash paratrin.sh [required opts] --extra_options "--min_kmer_cov 2 --min_glue 3"
+./paratrin.sh [required opts] --extra_options "--min_kmer_cov 2 --min_glue 3"
 ```
-The requirement to enclose arguments within double quotes also applies to the following options: `--quality_trimming_params`, `--bfly_opts`, `--grid_exec`, and `--singularity_extra_params`
 
+The requirement to enclose arguments within double quotes also applies to the options `--quality_trimming_params`, `--bfly_opts`, `--grid_exec`, and `--singularity_extra_params`. <br/><br/>
 
-### Help messages and version information
+### Printing a help message and version information
 To print a help message or version and license information, you may use the commands below, respectively:
 ```
-bash paratrin.sh --help
-bash paratrin.sh --version
+./paratrin.sh --help
+./paratrin.sh --version
 ```
 
 # Results
