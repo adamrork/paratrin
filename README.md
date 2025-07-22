@@ -8,13 +8,6 @@ Paratrin is a Bash script and requires no installation. You can obtain Paratrin 
 git clone https://github.com/adamrork/paratrin.git
 ```
 
-To make the `paratrin.sh` script executable, enter the paratrin directory and change its permissions like so:
-
-```
-cd paratrin/
-chmod +x paratrin.sh
-```
-
 # Dependencies
 Paratrin was developed for Linux operating systems and should work on most distributions. It has been tested on CentOS 7 and Ubuntu 19.04, specifically. Besides Bash and the standard GNU/Linux utilities, it has the following dependencies:
 
