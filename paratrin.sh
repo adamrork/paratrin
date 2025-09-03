@@ -168,7 +168,7 @@ help_message() {
   printf "%-30s%-20s%-50s\n" " --jaccard_clip" " none" " Set to run jaccard_clip"
   printf "%-30s%-20s%-50s\n" " --trimmomatic" " none" " Set to run Trimmomatic before assembly"
   printf "%-30s%-20s%-50s\n" " --full_cleanup" " none" " Set to retain only the Trinity fasta file"
-      printf "%-30s%-20s%-50s\n" " --run_as_paired" " none" " Set to analyze interleaved paired-end data in single-end mode"
+  printf "%-30s%-20s%-50s\n" " --run_as_paired" " none" " Set to analyze interleaved paired-end data in single-end mode"
   printf "%-30s%-20s%-50s\n" " --CPU" " <int>" " Number of CPUs per Trinity job"
   printf "%-30s%-20s%-50s\n\n" " --max_memory" " <str>" " Maximum amount of memory per Trinity job"
 
