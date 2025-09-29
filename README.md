@@ -50,7 +50,7 @@ Paratrin v0.5.0 is the first public beta release and is under active development
 # Command Formatting
 Your commands may only contain alphanumerics, spaces, and the following characters: `_ - / \ " ' : , .`
 
-Dollar signs (`$`) are allowed for specifying environmental variables (e.g., `"$FOO"`).
+Dollar signs (`$`) and curly brackets (`{}`) are allowed for specifying  variables (e.g., `"${FOO}"`).
 
 Path names should ideally contain only alphanumerics, hyphens, underscores, periods, and forward slashes. Although data filenames are not explicitly provided as arguments to Paratrin, they must also conform to these standards and will ideally consist of alphanumerics, hyphens, underscores, and periods only.
 
